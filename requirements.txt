@@ -1,11 +1,12 @@
-torch
+--find-links https://download.pytorch.org/whl/torch/
+torch==2.1.2+cpu
 numpy
 scipy
 tqdm
 coloredlogs
 easydict
 nibabel
-open3d==0.11.2
+open3d
 scikit-learn
 einops
 ipdb

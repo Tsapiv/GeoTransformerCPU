@@ -1,12 +1,12 @@
 from setuptools import setup
-from torch.utils.cpp_extension import BuildExtension, CUDAExtension
+from torch.utils.cpp_extension import BuildExtension, CppExtension
 
 
 setup(
     name='geotransformer',
     version='1.0.0',
     ext_modules=[
-        CUDAExtension(
+        CppExtension(
             name='geotransformer.ext',
             sources=[
                 'geotransformer/extensions/extra/cloud/cloud.cpp',
