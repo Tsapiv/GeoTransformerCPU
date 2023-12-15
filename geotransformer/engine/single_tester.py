@@ -8,7 +8,7 @@ from geotransformer.engine.base_tester import BaseTester
 from geotransformer.utils.summary_board import SummaryBoard
 from geotransformer.utils.timer import Timer
 from geotransformer.utils.common import get_log_string
-from geotransformer.utils.torch import release_cuda, to_cuda
+from geotransformer.utils.torch import release_tensor, to_tensor
 
 
 class SingleTester(BaseTester):
@@ -49,7 +49,7 @@ class SingleTester(BaseTester):
         for iteration, data_dict in pbar:
             # on start
             self.iteration = iteration + 1
-            data_dict = to_cuda(data_dict)
+            data_dict = to_tensor(data_dict)
             self.before_test_step(self.iteration, data_dict)
             # test step
             torch.cuda.synchronize()
@@ -62,7 +62,7 @@ class SingleTester(BaseTester):
             # after step
             self.after_test_step(self.iteration, data_dict, output_dict, result_dict)
             # logging
-            result_dict = release_cuda(result_dict)
+            result_dict = release_tensor(result_dict)
             summary_board.update_from_result_dict(result_dict)
             message = self.summary_string(self.iteration, data_dict, output_dict, result_dict)
             message += f', {timer.tostring()}'

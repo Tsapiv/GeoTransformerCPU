@@ -14,7 +14,7 @@ import ipdb
 
 from geotransformer.utils.summary_board import SummaryBoard
 from geotransformer.utils.timer import Timer
-from geotransformer.utils.torch import all_reduce_tensors, release_cuda, initialize
+from geotransformer.utils.torch import all_reduce_tensors, release_tensor, initialize
 from geotransformer.engine.logger import Logger
 
 
@@ -211,7 +211,7 @@ class BaseTrainer(abc.ABC):
             self.optimizer.zero_grad()
 
     def save_state(self, key, value):
-        self.saved_states[key] = release_cuda(value)
+        self.saved_states[key] = release_tensor(value)
 
     def read_state(self, key):
         return self.saved_states[key]
@@ -230,7 +230,7 @@ class BaseTrainer(abc.ABC):
         r"""All reduce and release tensors."""
         if self.distributed:
             result_dict = all_reduce_tensors(result_dict, world_size=self.world_size)
-        result_dict = release_cuda(result_dict)
+        result_dict = release_tensor(result_dict)
         return result_dict
 
     def set_train_mode(self):

@@ -94,14 +94,14 @@ def initialize(seed=None, cudnn_deterministic=True, autograd_anomaly_detection=F
     torch.autograd.set_detect_anomaly(autograd_anomaly_detection)
 
 
-def release_cuda(x):
+def release_tensor(x):
     r"""Release all tensors to item or numpy array."""
     if isinstance(x, list):
-        x = [release_cuda(item) for item in x]
+        x = [release_tensor(item) for item in x]
     elif isinstance(x, tuple):
-        x = (release_cuda(item) for item in x)
+        x = (release_tensor(item) for item in x)
     elif isinstance(x, dict):
-        x = {key: release_cuda(value) for key, value in x.items()}
+        x = {key: release_tensor(value) for key, value in x.items()}
     elif isinstance(x, torch.Tensor):
         if x.numel() == 1:
             x = x.item()
@@ -110,16 +110,16 @@ def release_cuda(x):
     return x
 
 
-def to_cuda(x):
+def to_tensor(x, device=torch.device('cpu')):
     r"""Move all tensors to cuda."""
     if isinstance(x, list):
-        x = [to_cuda(item) for item in x]
+        x = [to_tensor(item) for item in x]
     elif isinstance(x, tuple):
-        x = (to_cuda(item) for item in x)
+        x = (to_tensor(item) for item in x)
     elif isinstance(x, dict):
-        x = {key: to_cuda(value) for key, value in x.items()}
+        x = {key: to_tensor(value) for key, value in x.items()}
     elif isinstance(x, torch.Tensor):
-        x = x
+        x = x.to(device)
     return x
 
 

@@ -8,7 +8,7 @@ import tqdm
 from IPython import embed
 
 from geotransformer.engine.base_trainer import BaseTrainer
-from geotransformer.utils.torch import to_cuda
+from geotransformer.utils.torch import to_tensor
 from geotransformer.utils.summary_board import SummaryBoard
 from geotransformer.utils.timer import Timer
 from geotransformer.utils.common import get_log_string
@@ -113,7 +113,7 @@ class IterBasedTrainer(BaseTrainer):
         pbar = tqdm.tqdm(enumerate(self.val_loader), total=total_iterations)
         for iteration, data_dict in pbar:
             self.inner_iteration = iteration + 1
-            data_dict = to_cuda(data_dict)
+            data_dict = to_tensor(data_dict)
             self.before_val_step(self.inner_iteration, data_dict)
             timer.add_prepare_time()
             output_dict, result_dict = self.val_step(self.inner_iteration, data_dict)
@@ -155,7 +155,7 @@ class IterBasedTrainer(BaseTrainer):
         while self.iteration < self.max_iteration:
             self.iteration += 1
             data_dict = next(train_loader)
-            data_dict = to_cuda(data_dict)
+            data_dict = to_tensor(data_dict)
             self.before_train_step(self.iteration, data_dict)
             self.timer.add_prepare_time()
             # forward
