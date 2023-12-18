@@ -16,7 +16,7 @@ from geotransformer.modules.registration import get_node_correspondences
 from geotransformer.modules.sinkhorn import LearnableLogOptimalTransport
 
 WEIGHT_FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                "../../weights/geotransformer-3dmatch.pth.tar")
+                                "../weights/geotransformer-3dmatch.pth.tar")
 
 
 class GeoTransformer(nn.Module):
