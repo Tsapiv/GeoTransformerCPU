@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 pip3 install -r requirements.txt
-python3 setup.py build develop
+pip3 install .

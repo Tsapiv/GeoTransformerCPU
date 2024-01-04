@@ -1,6 +1,7 @@
 .idea
 .vscode
 build
+venv
 output
 *.egg-info
 *.so
