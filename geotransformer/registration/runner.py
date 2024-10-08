@@ -11,14 +11,17 @@ from geotransformer.utils.torch import to_tensor, release_tensor
 
 def register_point_clouds(src: o3d.geometry.PointCloud,
                           ref: o3d.geometry.PointCloud,
-                          voxel_size: Optional[float] = None,
+                          voxel_size: float,
                           model: Optional[GeoTransformer] = None,
-                          scale: Optional[float] = 100):
+                          scale: Optional[float] = None):
     cfg = make_cfg()
 
-    if voxel_size:
-        src = src.voxel_down_sample(voxel_size)
-        ref = ref.voxel_down_sample(voxel_size)
+    src = src.voxel_down_sample(voxel_size)
+    ref = ref.voxel_down_sample(voxel_size)
+
+    if scale is None:
+        scale = voxel_size / cfg.backbone.init_voxel_size
+
 
     src_points = np.asarray(src.points) / scale
     ref_points = np.asarray(ref.points) / scale

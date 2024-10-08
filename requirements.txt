@@ -1,6 +1,6 @@
 --find-links https://download.pytorch.org/whl/torch/
 torch==2.1.2+cpu
-numpy
+numpy==1.26.4
 scipy
 tqdm
 coloredlogs
