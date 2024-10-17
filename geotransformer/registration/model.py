@@ -218,7 +218,7 @@ class GeoTransformer(nn.Module):
 def create_model(config, pretrained=True):
     model = GeoTransformer(config)
     if pretrained:
-        state_dict = torch.load(WEIGHT_FILE_PATH, map_location=torch.device('cpu'))
+        state_dict = torch.load(WEIGHT_FILE_PATH, map_location=torch.device('cpu'), weights_only=True)
         model.load_state_dict(state_dict["model"])
 
     model.eval()

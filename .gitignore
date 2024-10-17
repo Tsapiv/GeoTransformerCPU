@@ -3,6 +3,8 @@
 build
 venv
 output
+dist
+.venv
 *.egg-info
 *.so
 **/__pycache__
@@ -10,3 +12,4 @@ weights/*
 pretrained
 data/Kitti/downsampled
 data/ModelNet/*.pkl
+*.bak
